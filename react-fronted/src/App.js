@@ -1,18 +1,23 @@
-import React,{Component} from 'react';
+import React,{Component,useState,useEffect} from 'react';
+import webSocket from 'socket.io-client';
 
 class App extends Component {
   state = {  
     list:true,
     card:false,
     players:[],
-    player:{}
+    player:{},
   }
   async componentDidMount(){
+    const [ws,setWs]= useState(null)
     let data = await fetch('http://localhost:3000/players/list')
     let newdata = await data.json()
     this.setState({
       players:newdata.data
     })
+  }
+  connectWebSocket=()=>{
+    setWs(webSocket('http://localhost:3000'))
   }
   showCard = async id=>{
     let cardi = await fetch(`http://localhost:3000/players/${id}`)

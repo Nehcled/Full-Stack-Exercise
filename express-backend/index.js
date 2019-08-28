@@ -1,8 +1,9 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+
+const app = express();
 
 const port = process.env.PORT || 3000;
 
@@ -14,9 +15,8 @@ app.use(bodyParser.json());
 const playersRouter = require('./routes/players');
 app.use('/players',playersRouter);
 
-app.listen(port,function(){
+const server = require('http').Server(app).listen(port,function(){
   console.log('Running on '+ port)
 })
-
 
 module.exports = app;
